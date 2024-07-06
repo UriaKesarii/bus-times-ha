@@ -132,7 +132,7 @@ mode: single
 
 Of course, change the values of `station` and `lines` as needed.
 
-#Let The Games Begin
+## Let The Games Begin
 
 Now you can access Assist in Home Assistant, enter a station and bus lines, and get information about when those lines are supposed to arrive.
 
