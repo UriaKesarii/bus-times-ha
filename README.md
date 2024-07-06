@@ -42,7 +42,6 @@ After adding the script and Shell Command integration, we will restart Home Assi
 A quick check to see that everything is working as expected:
 
 
-
 1. Navigate to [![Open your Home Assistant instance and show your service developer tools with a specific service selected.](https://my.home-assistant.io/badges/developer_call_service.svg)](https://my.home-assistant.io/redirect/developer_call_service/?service=shell_command.get_bus_time)
 2. Click on `call service` If the response looks like this
 ```
@@ -132,6 +131,10 @@ mode: single
 ```
 
 Of course, change the values of `station` and `lines` as needed.
+
+#Let The Games Begin
+
+Now you can access Assist in Home Assistant, enter a station and bus lines, and get information about when those lines are supposed to arrive.
 
 
 
