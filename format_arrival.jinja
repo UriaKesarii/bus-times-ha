@@ -1,0 +1,22 @@
+{% macro format_arrival(arrival) -%}
+{% set bus_data = arrival | from_json -%}
+{%- if bus_data and bus_data.buses -%}
+{{ bus_data.stationName }} 🚉
+{%- for bus in bus_data.buses -%}
+{% set hours = (bus.arrivalSeconds // 3600) %}{% set minutes = ((bus.arrivalSeconds % 3600) // 60) %}{% set seconds = (bus.arrivalSeconds % 60) %}
+🚍 {{ bus.lineNumber }} ⌚
+{%- if hours > 0 -%}
+{{ hours }} hour{% if hours > 1 %}s{% endif %} {{ minutes }} minute{% if minutes != 1 %}s{% endif %}
+{%- elif minutes > 0 -%}
+{{ minutes }} minute{% if minutes != 1 %}s{% endif %}
+{%- else -%}
+{{ seconds }} second{% if seconds != 1 %}s{% endif %}
+{%- endif -%}
+{%- if not loop.last %} {% endif -%}
+{%- endfor %}
+{%- else -%}
+No bus arrival data available.
+{%- endif -%}
+{{ "\n" }}
+{{ bus_data.time.split(' ')[1].split('.')[0] }}
+{%- endmacro %}
