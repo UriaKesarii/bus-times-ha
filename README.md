@@ -21,7 +21,7 @@ As you can see from the images above, you can get information about bus lines by
 
 ## Add A Python Script
 
-1. Create a new folder named `python_scripts` under the config `directory`.
+1. Create a new folder named `python_scripts` under the `config` directory.
 2. Create a new file named `get_bus_times.py`.
 3. Copy the code that appears [here](https://github.com/UriaKesarii/bus-times-ha/blob/main/get_bus_times.py) into the new file you created.
 
@@ -37,7 +37,7 @@ shell_command:
 
 After adding the script and Shell Command integration, we will restart Home Assistant.
 
-## A Quick Check.
+## A Quick Check
 
 A quick check to see that everything is working as expected:
 
@@ -51,6 +51,89 @@ stderr: ""
 returncode: 1
 ```
  it's working correctly. if not, something might have been missed.
+
+
+## Create Macros Templates File
+
+Let's create a Macros Templates File. This will allow us to define code that can be used in multiple places. For more information about the Macros Templates File, see [here](https://www.home-assistant.io/blog/2023/04/05/release-20234/#macros-for-your-templates).
+
+1. Create a new folder named `custom_templates` under the `config` directory.
+2. Create a new file named `tools.jinja`.
+3. Copy the code that appears [here](https://github.com/UriaKesarii/bus-times-ha/blob/main/format_arrival.jinja) into the new file you created.
+
+## Creating Automation
+
+Let's create the automation that returns information given a station number and buses, or just a station number.
+
+```
+alias: Get bus time
+trigger:
+  - platform: conversation
+    command:
+      - תחנה[=][ ]{station} קווים[=][ ]{lines}
+      - ת[=][ ]{station} ק[=][ ]{lines}
+      - תחנה[=][ ]{station}
+      - ת[=][ ]{station}
+condition: []
+action:
+  - service: shell_command.get_bus_time
+    response_variable: return_response
+    data:
+      station: "{{ trigger.slots.station }}"
+      lines: "{{ trigger.slots.lines | default('null') }}"
+  - set_conversation_response: |
+      {% from 'tools.jinja' import format_arrival %}
+      {{ format_arrival(return_response['stdout']) }}
+mode: single
+```
+
+Automation for reserved words
+
+```
+alias: Get bus time - Home
+trigger:
+  - platform: conversation
+    command:
+      - לבית
+      - to home
+condition: []
+action:
+  - service: shell_command.get_bus_time
+    response_variable: return_response
+    data:
+      station: "5200"
+      lines: 62,31
+  - set_conversation_response: |
+      {% from 'tools.jinja' import format_arrival %}  {{
+       format_arrival(return_response['stdout']) }}
+mode: single
+```
+
+
+```
+alias: Get bus time - Work
+description: ""
+trigger:
+  - platform: conversation
+    command:
+      - לעבודה
+      - to work
+condition: []
+action:
+  - service: shell_command.get_bus_time
+    response_variable: return_response
+    data:
+      station: "2262"
+      lines: 62,72
+  - set_conversation_response: |
+      {% from 'tools.jinja' import format_arrival %}  {{
+       format_arrival(return_response['stdout']) }}
+mode: single
+```
+
+Of course, change the values of `station` and `lines` as needed.
+
+
 
 
 
