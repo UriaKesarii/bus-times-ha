@@ -18,6 +18,8 @@ As you can see from the images above, you can get information about bus lines by
 3. `Providing only the station number`: If you only provide the station number, you will receive information about all the lines at the station you provided.
 
 
+Important: At the time of writing this guide, the core version is 2024.7.1. Note that things may work differently in other versions.
+
 
 ## Add A Python Script
 
@@ -35,7 +37,7 @@ shell_command:
   get_bus_time: "/bin/bash -c '/config/python_scripts/get_bus_times.py {{ station }} {{ lines }}'"
 ```
 
-After adding the script and Shell Command integration, we will restart Home Assistant.
+After adding the script and Shell Command integration, please restart Home Assistant.
 
 ## A Quick Check
 
@@ -43,7 +45,10 @@ A quick check to see that everything is working as expected:
 
 
 1. Navigate to [![Open your Home Assistant instance and show your service developer tools with a specific service selected.](https://my.home-assistant.io/badges/developer_call_service.svg)](https://my.home-assistant.io/redirect/developer_call_service/?service=shell_command.get_bus_time)
-2. Click on `call service` If the response looks like this
+2. Click on `call service`
+
+ <kbd><img src="https://github.com/UriaKesarii/bus-times-ha/blob/main/images/Screenshot%202024-07-07%20at%209.15.00.png" width="900"></kbd>  
+If the response looks like this
 ```
 stdout: "Usage: ./get_bus_times.py <station_number> <bus_lines>"
 stderr: ""
