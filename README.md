@@ -2,17 +2,17 @@
 ***Integration of Real-time Israel Bus Data Retrieval with Home Assistant Assist***
 
 
-In this README it will be described how with a few steps, we can ask Assist in Home Assistant to get information on how long it will take for bus lines at a specific station to arrive.
+This README describes how to use Home Assistant's Assist feature to get information on bus arrival times at specific stations with a few simple steps.
 
-Attached are a few images for example.
-
+Attached are some example images.
 
 
 <kbd><img src="https://github.com/UriaKesarii/bus-times-ha/blob/main/images/markup_1000069993.jpg" width="300"></kbd>       <kbd><img src="https://github.com/UriaKesarii/bus-times-ha/blob/main/images/markup_1000069984.jpg" width="300"></kbd>
 
 
 
-As you can see from the images above, you can get information about bus lines by:
+As shown in the images above, you can obtain bus line information by:
+
 1. `A reserved keyword`: "לעבודה" or "לבית".
 2. `Providing the station number and the lines`: *'תחנה=XXX קווים=nn,nn'* or *'ת=XXX ק=nn,nn'* or *'תחנה XXX קווים nn,nn'* or *'ת XXX ק nn,nn'*
 3. `Providing only the station number`: If you only provide the station number, you will receive information about all the lines at the station you provided.
@@ -25,19 +25,19 @@ Important: At the time of writing this guide, the core version is 2024.7.1. Note
 
 1. Create a new folder named `python_scripts` under the `config` directory.
 2. Create a new file named `get_bus_times.py`.
-3. Copy the code that appears [here](https://github.com/UriaKesarii/bus-times-ha/blob/main/get_bus_times.py) into the new file you created.
+3. Copy the code from [here](https://github.com/UriaKesarii/bus-times-ha/blob/main/get_bus_times.py) into the new file you created.
 
 
 ## Use The Shell Command Integration
 
-Using the [Shell Command integration](https://www.home-assistant.io/integrations/shell_command/), we can run the script we just created. Add the following lines to the `configuration.yaml` file:
+Using the [Shell Command integration](https://www.home-assistant.io/integrations/shell_command/), you can run the script you just created. Add the following lines to the `configuration.yaml` file:
 
 ```
 shell_command:
   get_bus_time: "/bin/bash -c '/config/python_scripts/get_bus_times.py {{ station }} {{ lines }}'"
 ```
 
-After adding the script and Shell Command integration, please restart Home Assistant.
+After adding the script and Shell Command integration, restart Home Assistant.
 
 ## A Quick Check
 
@@ -63,11 +63,11 @@ Let's create a Macros Templates File. This will allow us to define code that can
 
 1. Create a new folder named `custom_templates` under the `config` directory.
 2. Create a new file named `tools.jinja`.
-3. Copy the code that appears [here](https://github.com/UriaKesarii/bus-times-ha/blob/main/format_arrival.jinja) into the new file you created.
+3. Copy the code from [here](https://github.com/UriaKesarii/bus-times-ha/blob/main/format_arrival.jinja) into the new file you created.
 
 ## Creating Automation
 
-Let's create the automation that returns information given a station number and buses, or just a station number.
+Create the automation that returns information given a station number and buses, or just a station number:
 
 ```
 alias: Get bus time
@@ -91,7 +91,7 @@ action:
 mode: single
 ```
 
-Automation for reserved words
+Automation for reserved words:
 
 ```
 alias: Get bus time - Home
@@ -140,7 +140,6 @@ Of course, change the values of `station` and `lines` as needed.
 ## Let The Games Begin
 
 Now you can access Assist in Home Assistant, enter a station and bus lines, and get information about when those lines are supposed to arrive.
-
 
 
 
