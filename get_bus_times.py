@@ -38,7 +38,6 @@ async def get_bus_times(station: str, bus_lines: str, stop_id: str = None, stop_
 
                 stop_id = station_data[0]['stop_id']
                 stop_name = station_data[0]['stop_name']
-
             times_data = await get_bus_times_data(session, stop_id, current_time)
 
             all_buses = [
