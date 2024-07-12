@@ -34,7 +34,7 @@ Using the [Shell Command integration](https://www.home-assistant.io/integrations
 
 ```
 shell_command:
-  get_bus_time: "/bin/bash -c '/config/python_scripts/get_bus_times.py {{ station }} {{ lines }}'"
+  get_bus_time: "/bin/bash -c '/config/python_scripts/get_bus_times.py {{ station }} {{ lines }} {{ stop_id }} {{ stop_name }}'"
 ```
 
 After adding the script and Shell Command integration, restart Home Assistant.
@@ -50,7 +50,7 @@ A quick check to see that everything is working as expected:
  <kbd><img src="https://github.com/UriaKesarii/bus-times-ha/blob/main/images/Screenshot%202024-07-07%20at%209.15.00.png" width="900"></kbd>  
 If the response looks like this
 ```
-stdout: "Usage: ./get_bus_times.py <station_number> <bus_lines>"
+stdout: "Usage: ./get_bus_times.py <station_number> <bus_lines> [stop_id] [stop_name]"
 stderr: ""
 returncode: 1
 ```
